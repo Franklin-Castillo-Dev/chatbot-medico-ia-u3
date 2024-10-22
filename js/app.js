@@ -3,21 +3,27 @@ const chatForm = document.getElementById('chat-form');
 const userInput = document.getElementById('user-input');
 const loader = document.getElementById('loader'); // Referencia al loader
 
-const API_KEY = 'inserta-tu-apikey'; // Reemplaza con tu propia API Key
+const $sendButton = document.querySelector('.send-button');
+
+const API_KEY = 'api_key'; // Reemplaza con tu propia API Key
 
 // Inicializar la conversación con el rol de médico
 let messages = [
-  { role: 'system', content: 'Eres un médico. Responde a las preguntas de los pacientes con profesionalismo. Si se salen del tema medico diles que solo temas relacionados con la salud.' }
+  { role: 'system', content: 'Eres un médico. Responde a las preguntas de los pacientes con profesionalismo y proporciona soluciones de venta libre solo si es factible. Si se salen del tema medico diles que solo temas relacionados con la salud.' }
 ];
 
 // Mostrar mensaje de bienvenida al cargar el sitio
 window.onload = () => {
-  const welcomeMessage = "Bienvenido, soy tu asistente médico, puedes consultarme cualquier tema relacionado a la salud!";
+  const welcomeMessage = "Bienvenido, soy tu asistente médico del Grupo CEFAFA! Puedes consultarme cualquier tema relacionado a la salud!";
   displayMessage(welcomeMessage, 'bot');
 };
 
 chatForm.addEventListener('submit', async (event) => {
   event.preventDefault();
+
+  //Desactivar boton  
+  $sendButton.disabled = true;
+
   const userMessage = userInput.value;
 
   // Mostrar mensaje del usuario en la pantalla
@@ -37,6 +43,7 @@ chatForm.addEventListener('submit', async (event) => {
 
   // Mostrar la respuesta de ChatGPT palabra por palabra
   displayMessageWordByWord(response, 'bot');
+  
 });
 
 function displayMessage(message, sender) {
@@ -47,25 +54,48 @@ function displayMessage(message, sender) {
   chatBox.scrollTop = chatBox.scrollHeight; // Hacer scroll hasta abajo
 }
 
+function formatResponse(response) {
+   // Reemplazar saltos de línea con <br>
+   let formatted = response.replace(/\n/g, '<br>');
+
+   // Manejar listas numeradas o con viñetas
+   formatted = formatted.replace(/^\d+\.\s/gm, '<li>') // Cambiar números al inicio de línea por <li>
+                         .replace(/^\*\s/gm, '<li>'); // Cambiar viñetas al inicio de línea por <li>
+ 
+   // Agregar etiquetas <ul> al inicio y al final de la lista
+   formatted = formatted.replace(/(<li>.*?<\/li>)/g, '<ul>$1</ul>');
+ 
+   // Mantener negritas
+   formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Cambiar **texto** por <strong>texto</strong>
+ 
+   return formatted;
+}
+
 function displayMessageWordByWord(message, sender) {
   const messageElement = document.createElement('div');
   messageElement.classList.add('message', sender);
   chatBox.appendChild(messageElement);
 
-  let words = message.split(' '); // Dividir el mensaje en palabras
+  // Formatear la respuesta antes de dividirla en palabras
+  const formattedMessage = formatResponse(message);
+  let words = formattedMessage.split(' '); // Dividir el mensaje en palabras
   let wordIndex = 0;
 
   function displayNextWord() {
     if (wordIndex < words.length) {
-      messageElement.textContent += words[wordIndex] + ' '; // Agregar la siguiente palabra
+      messageElement.innerHTML += words[wordIndex] + ' '; // Usar innerHTML para incluir HTML formateado
       wordIndex++;
       chatBox.scrollTop = chatBox.scrollHeight; // Hacer scroll hasta abajo
-      setTimeout(displayNextWord, 100); // Esperar 100 ms antes de mostrar la siguiente palabra
+      setTimeout(displayNextWord, 65); // Esperar 65 ms antes de mostrar la siguiente palabra
+    } else {
+      // Activar el botón después de que se han mostrado todas las palabras
+      $sendButton.disabled = false;
     }
   }
 
   displayNextWord(); // Iniciar el ciclo de mostrar palabras
 }
+
 
 async function sendMessageToChatGPT(userMessage) {
   try {
@@ -79,7 +109,7 @@ async function sendMessageToChatGPT(userMessage) {
         'Authorization': `Bearer ${API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4', // Cambia el modelo si es necesario
+        model: 'gpt-4o', // Cambia el modelo si es necesario
         messages: messages, // Usar la lista de mensajes
       }),
     });
@@ -99,6 +129,9 @@ async function sendMessageToChatGPT(userMessage) {
     }
   } catch (error) {
     console.error('Error:', error);
+    //Activar boton
+    $sendButton.disabled = false;
     return 'Oops! Algo salió mal. Inténtalo de nuevo.';
+    
   }
 }

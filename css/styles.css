@@ -1,7 +1,7 @@
 /* Estilos generales */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7fa;
+    background-color: #B3E8BE;
     margin: 0;
     height: 100vh;
     display: flex;
@@ -26,7 +26,7 @@ body {
     flex-grow: 1;
     padding: 20px; /* Padding dentro del chat-box */
     overflow-y: auto; /* Scroll solo dentro del chat-box */
-    background-color: #fafafa;
+    background-color: #D1E8B3;
     border-bottom: 1px solid #ddd;
   }
   
@@ -35,6 +35,13 @@ body {
     margin-bottom: 10px;
     border-radius: 10px;
     max-width: 60%;
+  }
+  .message ul {
+    margin: 0;
+    padding-left: 20px; /* Ajusta el espacio de la lista */
+  }
+  .message li {
+    margin-bottom: 5px; /* Espacio entre elementos de la lista */
   }
   
   .user {
@@ -112,4 +119,27 @@ body {
       transform: rotate(360deg);
     }
   }
+
+  .send-button:disabled {
+    background-color: gray;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.6; /* Opcional: para que el botón se vea más "apagado" */
+  }
   
+  /* Estilo para el botón de créditos */
+.credits-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.credits-button:hover {
+  background-color: #0056b3;
+}
