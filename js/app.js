@@ -5,7 +5,7 @@ const loader = document.getElementById('loader'); // Referencia al loader
 
 const $sendButton = document.querySelector('.send-button');
 
-const API_KEY = 'api_key'; // Reemplaza con tu propia API Key
+const API_KEY = 'api_key'; // Reemplazar con API Key
 
 // Inicializar la conversación con el rol de médico
 let messages = [
