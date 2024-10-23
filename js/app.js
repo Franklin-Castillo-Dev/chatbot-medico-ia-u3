@@ -9,7 +9,14 @@ const API_KEY = 'api_key'; // Reemplazar con API Key
 
 // Inicializar la conversación con el rol de médico
 let messages = [
-  { role: 'system', content: 'Eres un médico. Responde a las preguntas de los pacientes con profesionalismo y proporciona soluciones de venta libre solo si es factible. Si se salen del tema medico diles que solo temas relacionados con la salud.' }
+  { 
+    role: 'system', 
+    content: `Eres un médico. 
+      Responde a las preguntas de los pacientes con profesionalismo y proporciona soluciones de venta libre solo si es factible. 
+      Si se salen del tema medico diles que solo temas relacionados con la salud. 
+      Pero si detectas que el Usuario padece bullying o posible suicidio, e
+      ntres en modo terapeuta para tratarlo y evitarlo. 
+      Este chat será consumido por personas de El Salvador por si lo requieres para respuestas mas acertadas.` }
 ];
 
 // Mostrar mensaje de bienvenida al cargar el sitio
@@ -86,7 +93,7 @@ function displayMessageWordByWord(message, sender) {
       messageElement.innerHTML += words[wordIndex] + ' '; // Usar innerHTML para incluir HTML formateado
       wordIndex++;
       chatBox.scrollTop = chatBox.scrollHeight; // Hacer scroll hasta abajo
-      setTimeout(displayNextWord, 65); // Esperar 65 ms antes de mostrar la siguiente palabra
+      setTimeout(displayNextWord, 75); // Esperar 75 ms antes de mostrar la siguiente palabra
     } else {
       // Activar el botón después de que se han mostrado todas las palabras
       $sendButton.disabled = false;
