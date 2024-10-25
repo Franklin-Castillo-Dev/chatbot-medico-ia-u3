@@ -271,7 +271,7 @@ async function checkApiDbAvailability() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ pregunta: 'check_api_availability' }) // Puedes enviar un valor dummy para probar la conexión
+      body: JSON.stringify({ pregunta: 'check_api_availability' }) // enviar un valor de Prueba para probar la conexión
     });
 
     // Verificamos que la respuesta tenga un status en el rango 200-299
