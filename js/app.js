@@ -3,7 +3,7 @@ const $chatForm = document.querySelector('#chat-form');
 const $userInput = document.querySelector('#user-input');
 const $loader = document.querySelector('#loader'); // Referencia al $loader
 
-const $sendButton = document.querySelector('.send-button');
+const $sendButton = document.querySelector('#send-button');
 
 const API_KEY = 'api_key'; // Reemplazar con API Key
 const API_KEY_IP = 'api_key_ip'; // Reemplazar con API Key
