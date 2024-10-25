@@ -1,52 +1,77 @@
-const chatBox = document.getElementById('chat-box');
-const chatForm = document.getElementById('chat-form');
-const userInput = document.getElementById('user-input');
-const loader = document.getElementById('loader'); // Referencia al loader
+const $chatBox = document.querySelector('#chat-box');
+const $chatForm = document.querySelector('#chat-form');
+const $userInput = document.querySelector('#user-input');
+const $loader = document.querySelector('#loader'); // Referencia al $loader
 
 const $sendButton = document.querySelector('.send-button');
 
 const API_KEY = 'api_key'; // Reemplazar con API Key
+const API_KEY_IP = 'api_key_ip'; // Reemplazar con API Key
+const URL_IP = `https://ipinfo.io/?token=${API_KEY_IP}`;
+
+let json_ip = "";
+
 
 // Inicializar la conversación con el rol de médico
-let messages = [
-  { 
-    role: 'system', 
-    content: `Eres un médico. 
-      Responde a las preguntas de los pacientes con profesionalismo y proporciona soluciones de venta libre solo si es factible. 
-      Si se salen del tema medico diles que solo temas relacionados con la salud. 
-      Pero si detectas que el Usuario padece bullying o posible suicidio, e
-      ntres en modo terapeuta para tratarlo y evitarlo. 
-      Este chat será consumido por personas de El Salvador por si lo requieres para respuestas mas acertadas.` }
-];
+let messages = [];
 
 // Mostrar mensaje de bienvenida al cargar el sitio
-window.onload = () => {
+window.onload = async () => {
+  let region = 'El Salvador';
+  let city = 'El Salvador';
+
+  try {
+    const res_ip = await fetch(URL_IP);
+    if (!res_ip.ok) {
+      throw new Error('Error en la solicitud IP');
+    }
+    const json_ip = await res_ip.json();
+    region = json_ip.region || 'El Salvador';
+    city = json_ip.city || 'El Salvador';
+  } catch (error) {
+    console.error('No se pudo obtener la ubicación:', error);
+  }
+
+  messages.push(
+    { 
+      role: 'system', 
+      content: `Eres un médico. 
+        Responde a las preguntas de los pacientes con profesionalismo y proporciona soluciones de venta libre solo si es factible. 
+        Si se salen del tema medico diles que solo temas relacionados con la salud. 
+        Pero si detectas que el Usuario padece bullying o posible suicidio, 
+        entres en modo terapeuta para tratarlo y evitarlo.
+        Para respuestas más acertadas, La ubicación exacta del usuario es Región: ${region} y Ciudad: ${city} por si necesitas
+        recomendarle unidades de salud al usuario, y si las ofreces, dile la direccion completa, no solo las enumeres, 
+        y seas lo mas preciso posible.`
+      }
+  );
+
   const welcomeMessage = "Bienvenido, soy tu asistente médico del Grupo CEFAFA! Puedes consultarme cualquier tema relacionado a la salud!";
   displayMessage(welcomeMessage, 'bot');
 };
 
-chatForm.addEventListener('submit', async (event) => {
+$chatForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   //Desactivar boton  
   $sendButton.disabled = true;
 
-  const userMessage = userInput.value;
+  const userMessage = $userInput.value;
 
   // Mostrar mensaje del usuario en la pantalla
   displayMessage(userMessage, 'user');
 
   // Limpiar el campo de entrada
-  userInput.value = '';
+  $userInput.value = '';
 
-  // Mostrar el loader mientras se espera la respuesta
-  loader.style.display = 'block';
+  // Mostrar el $loader mientras se espera la respuesta
+  $loader.style.display = 'block';
 
   // Consumir la API de OpenAI
   const response = await sendMessageToChatGPT(userMessage);
 
-  // Ocultar el loader cuando llega la respuesta
-  loader.style.display = 'none';
+  // Ocultar el $loader cuando llega la respuesta
+  $loader.style.display = 'none';
 
   // Mostrar la respuesta de ChatGPT palabra por palabra
   displayMessageWordByWord(response, 'bot');
@@ -57,8 +82,8 @@ function displayMessage(message, sender) {
   const messageElement = document.createElement('div');
   messageElement.classList.add('message', sender);
   messageElement.textContent = message;
-  chatBox.appendChild(messageElement);
-  chatBox.scrollTop = chatBox.scrollHeight; // Hacer scroll hasta abajo
+  $chatBox.appendChild(messageElement);
+  $chatBox.scrollTop = $chatBox.scrollHeight; // Hacer scroll hasta abajo
 }
 
 function formatResponse(response) {
@@ -81,7 +106,7 @@ function formatResponse(response) {
 function displayMessageWordByWord(message, sender) {
   const messageElement = document.createElement('div');
   messageElement.classList.add('message', sender);
-  chatBox.appendChild(messageElement);
+  $chatBox.appendChild(messageElement);
 
   // Formatear la respuesta antes de dividirla en palabras
   const formattedMessage = formatResponse(message);
@@ -92,7 +117,7 @@ function displayMessageWordByWord(message, sender) {
     if (wordIndex < words.length) {
       messageElement.innerHTML += words[wordIndex] + ' '; // Usar innerHTML para incluir HTML formateado
       wordIndex++;
-      chatBox.scrollTop = chatBox.scrollHeight; // Hacer scroll hasta abajo
+      $chatBox.scrollTop = $chatBox.scrollHeight; // Hacer scroll hasta abajo
       setTimeout(displayNextWord, 75); // Esperar 75 ms antes de mostrar la siguiente palabra
     } else {
       // Activar el botón después de que se han mostrado todas las palabras
