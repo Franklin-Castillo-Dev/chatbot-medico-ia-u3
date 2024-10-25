@@ -5,8 +5,8 @@ const $loader = document.querySelector('#loader'); // Referencia al $loader
 
 const $sendButton = document.querySelector('#send-button');
 
-const API_KEY = 'api_key'; // Reemplazar con API Key
-const API_KEY_IP = 'api_key_ip'; // Reemplazar con API Key
+const API_KEY = 'API_KEY'; // Reemplazar con API Key
+const API_KEY_IP = 'API_KEY_IP'; // Reemplazar con API Key
 
 const URL_IP = `https://ipinfo.io/?token=${API_KEY_IP}`;
 const URL_OpenAI = 'https://api.openai.com/v1/chat/completions'; // POST
@@ -18,20 +18,20 @@ const URL_EXIST_DB = 'http://localhost:8080/api/preguntas/existe'; // POST
 
 // Inicializar la conversación con el rol de médico
 let messages = [];
+let regionUser = 'El Salvador';
+let cityUser = 'El Salvador';
 
 // Mostrar mensaje de bienvenida al cargar el sitio
 window.onload = async () => {
-  let region = 'El Salvador';
-  let city = 'El Salvador';
-
+  
   try {
     const res_ip = await fetch(URL_IP);
     if (!res_ip.ok) {
       throw new Error('Error en la solicitud IP');
     }
     const json_ip = await res_ip.json();
-    region = json_ip.region || 'El Salvador';
-    city = json_ip.city || 'El Salvador';
+    regionUser = json_ip.region || 'El Salvador';
+    cityUser = json_ip.user || 'El Salvador';
   } catch (error) {
     console.error('No se pudo obtener la ubicación:', error);
   }
@@ -44,7 +44,7 @@ window.onload = async () => {
         Si se salen del tema medico diles que solo temas relacionados con la salud. 
         Pero si detectas que el Usuario padece bullying o posible suicidio, 
         entres en modo terapeuta para tratarlo y evitarlo.
-        Para respuestas más acertadas, La ubicación exacta del usuario es Región: ${region} y Ciudad: ${city} por si necesitas
+        Para respuestas más acertadas, La ubicación exacta del usuario es Región: ${regionUser} y Ciudad: ${cityUser} por si necesitas
         recomendarle unidades de salud al usuario, y si las ofreces, dile la direccion completa, no solo las enumeres, 
         y seas lo mas preciso posible.`
       }
@@ -196,7 +196,14 @@ async function sendMessageToChatGPTandSave(userMessage) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ pregunta: userMessage }),
+      body: JSON.stringify(
+        { 
+          pregunta: userMessage,
+          region: regionUser,
+          ciudad: cityUser
+
+        }
+      ),
     });
 
     const existsData = await existResponse.json();
@@ -208,7 +215,14 @@ async function sendMessageToChatGPTandSave(userMessage) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ pregunta: userMessage }),
+        body: JSON.stringify(
+          { 
+            pregunta: userMessage,
+            region: regionUser,
+            ciudad: cityUser
+  
+          }
+        ),
       });
 
       const answerDbData = await getDbAnswerResponse.json();
@@ -248,6 +262,8 @@ async function sendMessageToChatGPTandSave(userMessage) {
         body: JSON.stringify({
           pregunta: userMessage,
           respuesta: openAIResponseContent,
+          region: regionUser,
+          ciudad: cityUser
         }),
       });
 
@@ -271,7 +287,13 @@ async function checkApiDbAvailability() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ pregunta: 'check_api_availability' }) // enviar un valor de Prueba para probar la conexión
+      body: JSON.stringify(
+        { 
+          pregunta: 'check_api_availability',
+          region: "El Salvador",
+          ciudad: "El Salvador"
+
+        }) // enviar un valor de Prueba para probar la conexión
     });
 
     // Verificamos que la respuesta tenga un status en el rango 200-299
