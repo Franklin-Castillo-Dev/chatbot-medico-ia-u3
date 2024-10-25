@@ -31,7 +31,7 @@ window.onload = async () => {
     }
     const json_ip = await res_ip.json();
     regionUser = json_ip.region || 'El Salvador';
-    cityUser = json_ip.user || 'El Salvador';
+    cityUser = json_ip.city || 'El Salvador';
   } catch (error) {
     console.error('No se pudo obtener la ubicación:', error);
   }
