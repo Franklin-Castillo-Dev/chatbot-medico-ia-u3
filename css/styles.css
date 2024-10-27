@@ -1,133 +1,153 @@
 /* Estilos generales */
+/* Estilos generales */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #B3E8BE;
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 20px; /* Padding alrededor del body */
-    box-sizing: border-box; /* Incluir el padding en el cálculo de la altura */
-  }
-  
-  #chat-container {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 40px); /* Altura máxima visible menos el padding del body */
-    max-width: 100vw;
-    background-color: #fff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px; /* Bordes redondeados para el contenedor */
-    overflow: hidden; /* Evita que los bordes se vean fuera del contenedor */
-  }
-  
-  .chat-box {
-    flex-grow: 1;
-    padding: 20px; /* Padding dentro del chat-box */
-    overflow-y: auto; /* Scroll solo dentro del chat-box */
-    background-color: #D1E8B3;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .message {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    max-width: 60%;
-  }
-  .message ul {
-    margin: 0;
-    padding-left: 20px; /* Ajusta el espacio de la lista */
-  }
-  .message li {
-    margin-bottom: 5px; /* Espacio entre elementos de la lista */
-  }
-  
-  .user {
-    text-align: right;
-    background-color: #007bff;
-    color: white;
-    margin-left: auto;
-  }
-  
-  .bot {
-    text-align: left;
-    background-color: #e5e5ea;
-    color: black;
-    margin-right: auto;
-  }
-  
-  .chat-form {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-    background-color: #fff;
-  }
-  
-  #user-input {
-    flex-grow: 1;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  #user-input:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-  
-  .send-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 15px 30px;
-    font-size: 16px;
-    margin-left: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .send-button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Loader */
-  .loader {
-    text-align: center;
-    margin-top: 10px;
-  }
-  
-  .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border-left-color: #007bff;
-    animation: spin 1s ease infinite;
-    display: inline-block;
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+  background-color: #140056;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box; /* Incluir el padding en el cálculo de la altura */
+  background-image: url('https://www.farmaciascefafa.com.sv/header-background.5d8f1d02e7bb6cd5.jpg');
+  background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+  background-position: center; /* Centra la imagen de fondo */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-attachment: fixed; /* Hace que la imagen de fondo no se mueva al hacer scroll */
+}
 
-  .send-button:disabled {
-    background-color: gray;
-    color: white;
-    cursor: not-allowed;
-    opacity: 0.6; /* Opcional: para que el botón se vea más "apagado" */
+
+/* Contenedor general */
+#container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+  max-width: 100vw; /* Opción adicional para asegurar el ancho completo */
+  height: 90vh; /* Asegura que ocupe toda la altura */
+  box-sizing: border-box;
+}
+
+/* Contenedor del chat */
+#chat-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Hace que el chat ocupe todo el espacio disponible */
+  background-color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 20px; /* Espacio entre el chat y la promoción */
+}
+
+.chat-box {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #000247;
+  border-bottom: 1px solid #ddd;
+}
+
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.message ul {
+  margin: 0;
+  padding-left: 20px; /* Ajusta el espacio de la lista */
+}
+
+.message li {
+  margin-bottom: 5px; /* Espacio entre elementos de la lista */
+}
+
+.user {
+  text-align: right;
+  background-color: #007bff;
+  color: white;
+  margin-left: auto;
+}
+
+.bot {
+  text-align: left;
+  background-color: #e5e5ea;
+  color: black;
+  margin-right: auto;
+}
+
+.chat-form {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+}
+
+#user-input {
+  flex-grow: 1;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#user-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.send-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 30px;
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: #0056b3;
+}
+
+/* Loader */
+.loader {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border-left-color: #007bff;
+  animation: spin 1s ease infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
   }
-  
-  /* Estilo para el botón de créditos */
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+.send-button:disabled {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6; /* Opcional: para que el botón se vea más "apagado" */
+}
+
+/* Estilo para el botón de créditos */
 .credits-button {
   display: inline-block;
   padding: 10px 20px;
@@ -137,9 +157,72 @@ body {
   border-radius: 5px;
   font-size: 16px;
   transition: background-color 0.3s ease;
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .credits-button:hover {
   background-color: #0056b3;
+}
+
+/* Sección de la promoción */
+.promo-section {
+  flex: 1;
+  background-color: #1f3b6d;
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('https://www.farmaciascefafa.com.sv/header-background.5d8f1d02e7bb6cd5.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+.promo-section h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.promo-section p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.promo-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.promo-buttons a {
+  display: inline-block;
+  background-color: #00b5e2;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.promo-buttons a:hover {
+  background-color: #008bb5;
+}
+
+/* Estilo para el logo */
+.cefafa-logo {
+  width: 150px; /* Ajusta el tamaño del logo */
+  margin-bottom: 0px; /* Espacio entre el logo y el texto */
+}
+
+/* Imagen centrada debajo del texto */
+.medicamentos-img {
+  width: 230px; /* Ajusta el tamaño de la imagen */
+  margin-top: 0px; /* Espacio entre el texto y la imagen */
+  margin-bottom: 0px; /* Espacio entre la imagen y el botón */
 }
