@@ -109,11 +109,14 @@ function formatResponse(response) {
    return formatted;
 }
 
-//respuesta instantanea
+// Respuesta instantánea
 function displayMessage(message, sender) {
   const messageElement = document.createElement('div');
   messageElement.classList.add('message', sender);
-  messageElement.textContent = message;
+  
+  // Formatear el mensaje para que respete los saltos de línea
+  messageElement.innerHTML = formatResponse(message); // Usa la función formatResponse si necesitas formato adicional
+  
   $chatBox.appendChild(messageElement);
   $chatBox.scrollTop = $chatBox.scrollHeight; // Hacer scroll hasta abajo
 }
