@@ -21,6 +21,7 @@ let messages = [];
 let regionUser = 'El Salvador';
 let cityUser = 'El Salvador';
 
+
 // Mostrar mensaje de bienvenida al cargar el sitio
 window.onload = async () => {
   
@@ -54,6 +55,12 @@ window.onload = async () => {
   displayMessage(welcomeMessage, 'bot');
 };
 
+// Ajuste de altura dinámica para user-input
+$userInput.addEventListener('input', () => {
+  $userInput.style.height = 'auto'; // Restablecer la altura para recalcular
+  $userInput.style.height = $userInput.scrollHeight + 'px'; // Ajustar a la altura del contenido
+});
+
 $chatForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
@@ -67,6 +74,9 @@ $chatForm.addEventListener('submit', async (event) => {
 
   // Limpiar el campo de entrada
   $userInput.value = '';
+
+  $userInput.style.height = 'auto'; // Restablecer la altura para recalcular
+  $userInput.style.height = $userInput.scrollHeight + 'px'; // Ajustar a la altura del contenido
 
   // Mostrar el $loader mientras se espera la respuesta
   $loader.style.display = 'block';

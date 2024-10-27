@@ -85,6 +85,8 @@ body {
   padding: 10px;
   border-top: 1px solid #ddd;
   background-color: #fff;
+  gap: 10px; /* Espacio entre el campo de texto y el botón */
+  flex-wrap: wrap; /* Permitir que se ajuste en pantallas pequeñas */
 }
 
 #user-input {
@@ -93,6 +95,8 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  resize: none; /* Evita que el usuario redimensione manualmente */
+  overflow: hidden; /* Oculta la barra de desplazamiento */
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -106,11 +110,21 @@ body {
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 15px 30px;
+  padding: 15px 20px; /* Reduce el ancho para que sea más compacto */
   font-size: 16px;
-  margin-left: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  flex-shrink: 0; /* Evita que el botón se reduzca en pantallas pequeñas */
+}
+@media (max-width: 767px) {
+  .chat-form {
+    flex-direction: column; /* Coloca el botón debajo del input en pantallas pequeñas */
+  }
+
+  .send-button {
+    width: 100%; /* Hace que el botón ocupe todo el ancho en dispositivos móviles */
+    padding: 12px; /* Ajusta el padding para mejor visualización */
+  }
 }
 
 .send-button:hover {
@@ -227,4 +241,22 @@ body {
   width: 230px; /* Ajusta el tamaño de la imagen */
   margin-top: 0px; /* Espacio entre el texto y la imagen */
   margin-bottom: 0px; /* Espacio entre la imagen y el botón */
+}
+
+/* Esconder promocion en Telefonos para Responsive */
+@media (max-width: 767px) {
+  .promo-section {
+      display: none;
+  }
+  .credits-button.mobile {
+    background-color: #FADA7D;
+    color: #000;
+    display: block;
+    margin: 0em 1em 0.5em 1em;
+  }
+}
+@media (min-width: 768px) {  
+  .credits-button.mobile {
+    display: none;    
+  }
 }
